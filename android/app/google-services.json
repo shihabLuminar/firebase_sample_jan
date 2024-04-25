@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "1025777796893",
+    "project_id": "dec-sample",
+    "storage_bucket": "dec-sample.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025777796893:android:3c8ff11fea40dd0df903f4",
+        "android_client_info": {
+          "package_name": "com.luminartechnolab.firebasesampledec"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1025777796893-krj9h8rf8luc0r7l1mrdrdacav2qb7sl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXnmJYudtG_xsToCIcCtWx8hBiPCD8MhE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1025777796893-krj9h8rf8luc0r7l1mrdrdacav2qb7sl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025777796893:android:8b3d2183040da79cf903f4",
+        "android_client_info": {
+          "package_name": "com.luminartechnolab.sampleappjan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1025777796893-krj9h8rf8luc0r7l1mrdrdacav2qb7sl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXnmJYudtG_xsToCIcCtWx8hBiPCD8MhE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1025777796893-krj9h8rf8luc0r7l1mrdrdacav2qb7sl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
