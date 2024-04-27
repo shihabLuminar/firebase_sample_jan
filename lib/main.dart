@@ -1,6 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_sample_jan/controller/loginscreen_controller.dart';
+import 'package:firebase_sample_jan/controller/registration_screen_controller.dart';
 import 'package:firebase_sample_jan/view/home_screen/home_screen.dart';
+import 'package:firebase_sample_jan/view/login_screen/login_screen.dart';
+import 'package:firebase_sample_jan/view/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,8 +25,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomeScreen(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => RegistrationScreenController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LoginScreenController(),
+        )
+      ],
+      child: MaterialApp(
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return HomeScreen();
+            } else {
+              return LoginScreen();
+            }
+          },
+        ),
+      ),
     );
   }
 }
