@@ -1,10 +1,11 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,8 +15,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  XFile? file; // picked image file
+  var url;
   TextEditingController nc = TextEditingController();
   TextEditingController pc = TextEditingController();
+
   CollectionReference collectionRef =
       FirebaseFirestore.instance.collection("employees");
   @override
@@ -46,6 +50,43 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
+                InkWell(
+                  onTap: () async {
+                    file = await ImagePicker()
+                        .pickImage(source: ImageSource.camera);
+
+                    setState(() {});
+
+                    if (file != null) {
+                      var uniqueName =
+                          DateTime.now().millisecondsSinceEpoch.toString();
+                      // root reference
+                      final storageRef = FirebaseStorage.instance.ref();
+
+                      //create a folder inside the root
+                      var folderReference = storageRef.child("Images");
+
+                      //create a reference to which the image shoul be uploaded
+
+                      var uploadRef = folderReference.child("$uniqueName.jpg");
+
+                      await uploadRef.putFile(File(file!.path));
+
+                      url = await uploadRef.getDownloadURL();
+                      log(url.toString());
+                    }
+                  },
+                  child: file != null
+                      ? CircleAvatar(
+                          radius: 50,
+                          backgroundImage: FileImage(File(file!.path)),
+                        )
+                      : CircleAvatar(
+                          radius: 50,
+                          child: Icon(Icons.person),
+                        ),
+                ),
+                SizedBox(height: 20),
                 TextFormField(
                   controller: nc,
                   decoration: InputDecoration(
@@ -64,6 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       collectionRef.add({
                         "name": nc.text,
                         "ph": pc.text,
+                        "url": url ?? "",
                       });
                     },
                     child: Text("add")),
@@ -72,6 +114,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
                       return ListTile(
+                        leading:
+                            Image.network(snapshot.data!.docs[index]['url']),
                         title: Text(snapshot.data!.docs[index]['name']),
                         subtitle: Text(snapshot.data!.docs[index]['ph']),
                         trailing: Row(

@@ -58,7 +58,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 context: context,
                                 email: emailController.text,
                                 password: passController.text)
-                            .then((value) {
+                            .then((value) async {
+                          final user = FirebaseAuth.instance.currentUser;
+
+                          await user?.updateDisplayName("Jane Q. User");
+                          await user?.updatePhotoURL(
+                              "https://example.com/jane-q-user/profile.jpg");
+
                           if (value == true) {
                             // login success
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(

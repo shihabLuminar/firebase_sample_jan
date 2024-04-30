@@ -39,9 +39,11 @@ class MyApp extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return HomeScreen();
+              return SplashScreen(
+                isAlreadyLogged: true,
+              );
             } else {
-              return LoginScreen();
+              return SplashScreen();
             }
           },
         ),
